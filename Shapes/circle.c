@@ -25,10 +25,13 @@ Circle* circle_info(Point center, int radius) {
     ci->modif.angle = 0.0;
     ci->modif.dx = 0;
     ci->modif.dy = 0;
-    ci->modif.flip_x = false;
-    ci->modif.flip_y = false;
+    ci->modif.symetry_x = false;
+    ci->modif.symetry_y = false;
     
     nb_forme++;
+    printf(GREEN"Cercle créé avec succès !\n"RESET);
+    printf("appuyez sur entrer pour continuer...\n");
+    scanf("%*c", getchar());
     return ci;
 }
 
@@ -38,5 +41,6 @@ void free_circle(Circle* ce) {
     if (ce->style != NULL) {
         free_style(ce->style);
     }
+
     free(ce);
 }

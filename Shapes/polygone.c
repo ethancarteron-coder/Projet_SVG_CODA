@@ -21,10 +21,25 @@ Polygone* polygone_info(const Point* point, const int nb_points) {
     }
 
     pg->nb_points = nb_points;
-    pg->style = NULL;
+    
+    pg->style = style_info("black", "white", 1.0f);
+    if (pg->style == NULL) {
+        free(pg->points);
+        free(pg);
+        return NULL;
+    }
+
+    pg->modif.angle = 0.0;
+    pg->modif.dx = 0;
+    pg->modif.dy = 0;
+    pg->modif.symetry_x = false;
+    pg->modif.symetry_y = false;
 
     nb_forme++;
-            return pg;
+    printf(GREEN"Polygone créé avec succès !\n"RESET);
+    printf("appuyez sur entrer pour continuer...\n");
+    scanf("%*c", getchar());
+    return pg;
 }
 
 void free_polygone(Polygone* pg) {
@@ -33,6 +48,10 @@ void free_polygone(Polygone* pg) {
 
     if (pg->points != NULL)
         free(pg->points);
+
+    if (pg->style != NULL) {
+        free_style(pg->style);
+    }
 
     free(pg);
 }

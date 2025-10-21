@@ -27,7 +27,7 @@ void add_shape (Shape_list* list, const Shapes_type type, const Shapes_data data
 
 void list_shapes(Shape_list* list) {
     if (list == NULL || list->size == 0) {
-        printf("Aucune forme disponible.\n");
+    printf(YELLOW"Aucune forme disponible.\n"RESET);
         return;
     }
 
@@ -75,8 +75,10 @@ void list_shapes(Shape_list* list) {
 
 
             default:
-                printf("Shape %d: Type inconnu\n", i);
+                printf(YELLOW"Shape %d: Type inconnu\n"RESET, i);
                 break;
         }
     }
+    printf("Appuyez sur Entrée pour continuer...\n");
+    scanf("%*c", 0, getchar());
 }
