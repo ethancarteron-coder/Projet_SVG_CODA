@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "shapes.h"
 
-Square* square_info (Point origin, int side) {
+Square* square_info (const Point origin, const int side) {
     Square* sq = malloc (sizeof(Square));
     if (sq == 0)
         return NULL;

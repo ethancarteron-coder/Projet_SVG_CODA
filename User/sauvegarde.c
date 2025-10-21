@@ -4,7 +4,7 @@
 #include "sauvegarde.h"
 #include "shapes.h"
 
-int save_file(const char* filename, SaveFormat format, ShapeList* list) {
+int save_file(const char* filename, SaveFormat format, Shape_list* list) {
     FILE* f = fopen(filename, "w");
     if (f == NULL) return -1;
     switch (format) {
@@ -34,6 +34,6 @@ int save_file(const char* filename, SaveFormat format, ShapeList* list) {
     return 0;
 }
 
-int export_as_svg(const char* filename, ShapeList* list) {
+int export_as_svg(const char* filename, Shape_list* list) {
     return save_file(filename, FORMAT_SVG, list);
 }

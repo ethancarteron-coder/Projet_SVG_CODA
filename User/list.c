@@ -1,9 +1,11 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "shapes.h"
 #include "list.h"
 
-void add_shape (ShapeList* list, Shapes_type type, Shapes_data data) {
+void add_shape (Shape_list* list, const Shapes_type type, const Shapes_data data) {
+    if  (list == NULL) return;
     Shape_node* node = malloc(sizeof(Shape_node));
     if (node == NULL) return;
 
@@ -12,19 +14,19 @@ void add_shape (ShapeList* list, Shapes_type type, Shapes_data data) {
     node->next = NULL;
     node->prev = list->tail;
 
-    if  (list->tail == 1)
+    if  (list->tail != NULL)
         list->tail->next = node;
-    else
+    else {
         list->head = node;
-    
-        list->tail = node;
-        list->size++;
+    }
+    list->tail = node;
+    list->size++;
 }
 
 
 
-void list_shapes(ShapeList* list) {
-    if (list == 0 || list->size == 0) {
+void list_shapes(Shape_list* list) {
+    if (list == NULL || list->size == 0) {
         printf("Aucune forme disponible.\n");
         return;
     }

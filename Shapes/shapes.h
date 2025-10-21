@@ -2,25 +2,17 @@
     #define SHAPES_H
 
     #include <stdio.h>
-    #include <stdlib.h>
     #include <stdbool.h>
 
-
     typedef struct {
-        unsigned char r, g, b;
-
-    } Color;
-
-    typedef struct {
-        Color stroke_color;
-        Color fill_color;
+        char* stroke_color;
+        char* fill_color;
         float stroke_width;
         char* id;
     } Style;
 
-    Color color_create(unsigned char r, unsigned char g, unsigned char b, float opacity);
-    Style* attributes_create(void);
-    void attributes_free(Style* style);
+    Style* style_info(const char* stroke_color, const char* fill_color, float stroke_width);
+    void free_style(Style* style);
     
     extern int nb_forme;
     
@@ -35,7 +27,7 @@
         int dy;
         bool flip_x;
         bool flip_y;
-    } Transform;
+    } Modif;
 
 
 
@@ -43,7 +35,7 @@
         Point center;
         int radius;
         Style* style;
-        Transform transform;
+        Modif modif;
     } Circle;
 
     typedef struct {
@@ -51,7 +43,7 @@
         int radius_x;
         int radius_y;
         Style* style;
-        Transform transform;
+        Modif modif;
     } Ellipse;
 
 
@@ -60,7 +52,7 @@
         Point start;
         Point end;
         Style* style;
-        Transform transform;
+        Modif modif;
     } Line;
 
 
@@ -70,7 +62,7 @@
         int lenght;
         int width;
         Style* style;
-        Transform transform;
+        Modif modif;
     } Rectangle;
 
 
@@ -79,16 +71,16 @@
         Point origin;
         int side;
         Style* style;
-        Transform transform;
+        Modif modif;
     } Square;
 
 
 
     typedef struct {
         size_t nb_points;
-        Point *points;
+        Point* points;
         Style* style;
-        Transform transform;
+        Modif modif;
     } Polyline;
 
 
@@ -97,28 +89,9 @@
         size_t nb_points;
         Point* points;
         Style* style;
-        Transform transform;
+        Modif modif;
     } Polygone;
 
-    typedef enum {
-        MOVE_TO,
-        LINE_TO,
-        CURVE_TO,
-        CLOSE_PATH
-    }PathCommandType;
-
-    typedef struct {
-        PathCommandType type;
-        Point* points;
-        int num_points;
-    } PathCommand;
-
-    typedef struct {
-        PathCommand* commands;
-        size_t num_commands;
-        size_t capacity;
-        Style style;
-    } Path;
 
 
     typedef union {
@@ -129,7 +102,6 @@
         Square* square;
         Polygone* polygone;
         Polyline* polyline;
-        Path* path;
     } Shapes_data;
 
 
@@ -143,7 +115,6 @@
         SQUARE,
         POLYGONE,
         POLYLINE,
-        PATH,
         GROUP
     } Shapes_type;
 
@@ -152,30 +123,15 @@
     typedef struct{
         Shapes_data data;
         Shapes_type type;
-        struct ShapeNode* next;
-        struct ShapeNode* prev;
+        struct Shape_node* next;
+        struct Shape_node* prev;
     }Shape_node;
 
     typedef struct {
         Shape_node* head;
         Shape_node* tail;
         int size;
-    } ShapeList;
-
-    typedef struct {
-        ShapeList* shapes;
-        Style style;
-        char* id;
-    } Group;
-
-
-
-    Group* group_create(void);
-    void free_group(Group* group);
-    int group_add_element(Group* group, void* element, int is_group);
-    int group_remove_element(Group* group, void* element);
-    void group_apply_attributes(Group* group, Style* style);
-    void group_transform(Group* group);
+    } Shape_list;
 
 
     Circle* circle_info(Point center, int radius);
@@ -188,21 +144,9 @@
     void free_rectangle (Rectangle* re);
     Square* square_info(Point origin, int side);
     void free_square (Square* sq);
-    Polyline* polyline_info(Point* point, int nb_points);
+    Polyline* polyline_info(const Point* point, int nb_points);
     void free_polyline(Polyline* pl);
-    Polygone* polygone_info(Point* point, int nb_points);
+    Polygone* polygone_info(const Point* point, int nb_points);
     void free_polygone(Polygone* pg);
 
-
-    Path* path_create(void);
-    void path_free(Path* path);
-
-
-    int path_move_to(Path* path, Point p);
-    int path_line_to(Path* path, Point p);
-    int path_curve_to(Path* path, Point cp1, Point cp2, Point end);
-    int path_close(Path* path);
-
-
-    int path_add_command(Path* path, PathCommandType type, Point* points, int num_points);
 #endif

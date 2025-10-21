@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "shapes.h"
 
-Ellipse* ellipse_info (Point center, int radius_x, int radius_y) {
+Ellipse* ellipse_info (const Point center, const int radius_x, const int radius_y) {
     Ellipse* el = malloc(sizeof(Ellipse));
     if(el == 0)
         return NULL;

@@ -23,6 +23,4 @@
 
     int modify_shape_position(Shape_node* node, Point new_position);
     int modify_shape_attributes(Shape_node* node, const Style* new_style);
-    int modify_group(Group* group, const char* operation, void* params);
-
 #endif

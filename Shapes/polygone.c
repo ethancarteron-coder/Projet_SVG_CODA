@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "shapes.h"
 
-Polygone* polygone_info(Point* points, int nb_points) {
-    if (points == NULL || nb_points <= 3)
+Polygone* polygone_info(const Point* point, const int nb_points) {
+    if (point == NULL || nb_points <= 3)
         return NULL;
 
     Polygone* pg = (Polygone*) malloc(sizeof(Polygone));
@@ -17,7 +17,7 @@ Polygone* polygone_info(Point* points, int nb_points) {
     }
 
     for (int i = 0; i < nb_points; i++) {
-        pg->points[i] = points[i];
+        pg->points[i] = point[i];
     }
 
     pg->nb_points = nb_points;

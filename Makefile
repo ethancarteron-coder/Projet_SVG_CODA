@@ -1,6 +1,6 @@
 # Makefile robuste qui préserve l'arborescence dans bin/
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -g -I. -IUtils -IUI -IShapes -IUser -IGI -MMD -MP
+CFLAGS := -std=c99 -Wall -Wextra -Wconversion -g -O0 -I. -IUtils -IUI -IShapes -IUser -IGI -MMD -MP
 
 OBJDIR := bin
 TARGET := $(OBJDIR)/projet
@@ -40,6 +40,8 @@ run: $(TARGET)
 clean:
 	@rm -rf $(OBJDIR)
 	@printf "=> bin/ supprimé\n"
+	@rm -rf affichage.svg
+	@printf "=> affichage.svg supprimé\n"
 
 # debug : affiche les variables utiles (combien de sources/objets)
 .PHONY: debug

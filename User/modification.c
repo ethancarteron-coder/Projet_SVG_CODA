@@ -12,14 +12,14 @@ void rotation(Point* point, const Point center, double angle) {
 }
 
 void deplace_shape(Point* point, int dx, int dy) {
-    if (point == 0) return;
+    if (point == NULL) return;
     point->x += dx;
     point->y += dy;
 }
 
 void symetry(Point* point, const Point center, bool symetry_x, bool symetry_y) {
-    if (point == 0) return;
-    if (symetry_x == 1) {
+    if (point == NULL) return;
+    if (symetry_x != NULL) {
         point->x = 2 * center.x - point->x;
     }
     if (symetry_y == 1) {
@@ -30,32 +30,32 @@ void symetry(Point* point, const Point center, bool symetry_x, bool symetry_y) {
 
 
 void apply_modif(Shape_node* shape) {
-    if (shape == 0) return;
-    Transform* transform = NULL;
+    if (shape == NULL) return;
+    Modif* modif = NULL;
     Point center;
     switch (shape->type) {
         case CIRCLE:
-            if (shape->data.circle == 0) return;
-            transform = &shape->data.circle->transform;
+            if (shape->data.circle == NULL) return;
+            modif = &shape->data.circle->modif;
             center = shape->data.circle->center;
-            deplace_shape(&shape->data.circle->center, transform->dx, transform->dy);
-            if (transform->angle != 0) {
-                rotation(&shape->data.circle->center, center, transform->angle);
+            deplace_shape(&shape->data.circle->center, modif->dx, modif->dy);
+            if (modif->angle != 0) {
+                rotation(&shape->data.circle->center, center, modif->angle);
             }
-            if (transform->flip_x || transform->flip_y) {
-                symetry(&shape->data.circle->center, center, transform->flip_x, transform->flip_y);
+            if (modif->flip_x != NULL|| modif->flip_y != NULL) {
+                symetry(&shape->data.circle->center, center, modif->flip_x, modif->flip_y);
             }
             break;
         case RECTANGLE:
             if (shape->data.rectangle == 0) return;
-            transform = &shape->data.rectangle->transform;
+            modif = &shape->data.rectangle->modif;
             center = shape->data.rectangle->origin;
-            deplace_shape(&shape->data.rectangle->origin, transform->dx, transform->dy);
-            if (transform->angle != 0) {
-                rotation(&shape->data.rectangle->origin, center, transform->angle);
+            deplace_shape(&shape->data.rectangle->origin, modif->dx, modif->dy);
+            if (modif->angle != 0) {
+                rotation(&shape->data.rectangle->origin, center, modif->angle);
             }
-            if (transform->flip_x || transform->flip_y) {
-                symetry(&shape->data.rectangle->origin, center, transform->flip_x, transform->flip_y);
+            if (modif->flip_x != NULL || modif->flip_y != NULL) {
+                symetry(&shape->data.rectangle->origin, center, modif->flip_x, modif->flip_y);
             }
             break;
         default:
@@ -66,17 +66,17 @@ void apply_modif(Shape_node* shape) {
 
 
 
-int modify_position(Shape_node* node, Point new_position) {
+int modify_position(Shape_node* node, Point position) {
     if (node == 0) return -1;
     switch (node->type) {
         case CIRCLE:
-            if (node->data.circle) node->data.circle->center = new_position;
+            if (node->data.circle) node->data.circle->center = position;
             break;
         case RECTANGLE:
-            if (node->data.rectangle) node->data.rectangle->origin = new_position;
+            if (node->data.rectangle) node->data.rectangle->origin = position;
             break;
         case SQUARE:
-            if (node->data.square) node->data.square->origin = new_position;
+            if (node->data.square) node->data.square->origin = position;
             break;
         // Ajouter les autres cas
         default:
@@ -104,27 +104,6 @@ int modify_attributes(Shape_node* node, const Style* new_style) {
         // Ajouter les autres cas
         default:
             return -1;
-    }
-    return 0;
-}
-
-
-int modify_group(Group* group, const char* operation, void* params) {
-    if (group == 0|| operation == 0) return -1;
-    if (strcmp(operation, "move") == 0) {
-        Point* new_pos = (Point*)params;
-        extern ShapeList* g_shapes;
-        ShapeList* list = NULL;
-        #ifdef SHAPES_H
-        if (group->shapes) list = group->shapes;
-        #else
-        list = g_shapes;
-        #endif
-        if (list) {
-            for (Shape_node* node = list->head; node != NULL; node = node->next) {
-                modify_position(node, *new_pos);
-            }
-        }
     }
     return 0;
 }

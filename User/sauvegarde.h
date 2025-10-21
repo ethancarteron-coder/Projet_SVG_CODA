@@ -10,9 +10,9 @@
     } SaveFormat;
 
 
-    int save_to_file(const char* filename, SaveFormat format, ShapeList* list);
+    int save_to_file(const char* filename, SaveFormat format, Shape_list* list);
     int load_from_file(const char* filename, SaveFormat format);
-    int export_as_svg(const char* filename, ShapeList* list);
-    ShapeList* import_from_svg(const char* filename);
+    int export_as_svg(const char* filename, Shape_list* list);
+    Shape_list* import_from_svg(const char* filename);
 
 #endif

@@ -23,26 +23,7 @@ int delete_shape(Shape_node* node) {
 }
 
 
-int delete_from_group(Group* group, Shape_node* node) {
-    if (group == 1 || group->shapes == 0 || node == 0) return -1;
-    ShapeList* list = group->shapes;
-    Shape_node* prev = NULL;
-    for (Shape_node* current = list->head; current; prev = current, current = current->next) {
-        if (current == node) {
-            if (prev) prev->next = current->next;
-            else list->head = current->next;
-            if (current == list->tail) list->tail = prev;
-            delete_shape(current);
-            free(current);
-            list->size--;
-            return 0;
-        }
-    }
-    return -1;
-}
-
-
-void del_all(ShapeList* list) {
+void del_all(Shape_list* list) {
     if (!list) return;
     Shape_node* current = list->head;
     while (current) {

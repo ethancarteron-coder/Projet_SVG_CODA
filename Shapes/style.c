@@ -2,25 +2,34 @@
 #include <string.h>
 #include "shapes.h"
 
-Color color_create(unsigned char r, unsigned char g, unsigned char b, float opacity) {
-    Color color = {r, g, b};
-    return color;
-}
-
-Style* attributes_create() {
+Style* style_info(const char* stroke_color, const char* fill_color, float stroke_width) {
     Style* style = malloc(sizeof(Style));
     if (style == NULL) return NULL;
 
-    style->stroke_color = color_create(0, 0, 0, 1.0f);
-    style->fill_color = color_create(255, 255, 255, 1.0f);
-    style->stroke_width = 1.0f;
+    if (stroke_color != NULL) {
+        style->stroke_color = malloc(strlen(stroke_color) + 1);
+        if (style->stroke_color) strcpy(style->stroke_color, stroke_color);
+    } else {
+        style->stroke_color = NULL;
+    }
+
+    if (fill_color != NULL) {
+        style->fill_color = malloc(strlen(fill_color) + 1);
+        if (style->fill_color) strcpy(style->fill_color, fill_color);
+    } else {
+        style->fill_color = NULL;
+    }
+
+    style->stroke_width = stroke_width;
     style->id = NULL;
     
     return style;
 }
 
-void attributes_free(Style* style) {
+void free_style(Style* style) {
     if (style == NULL) return;
+    free(style->stroke_color);
+    free(style->fill_color);
     free(style->id);
     free(style);
 }

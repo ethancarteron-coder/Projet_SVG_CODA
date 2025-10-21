@@ -1,16 +1,16 @@
 #ifndef CREATION_H
     #define CREATION_H
 
-    void creation_menu ();
+    #include "shapes.h"
 
-    void ask_circle ();
+    void ask_circle (Shape_list* list, Point center, Style* style);
 
-    void ask_ellipse ();
+    void ask_ellipse (Shape_list* list, Point center);
 
-    void ask_line ();
+    void ask_line (Shape_list* list, Point start, Point end);
 
-    void ask_rectangle ();
+    void ask_rectangle (Shape_list* list, Point origin);
 
-    void ask_square ();
+    void ask_square (Shape_list* list, Point origin);
 
 #endif

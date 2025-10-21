@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "shapes.h"
 
-void export_svg(const char *filename, ShapeList* list) {
+void export_svg(const char *filename, Shape_list* list, Style* style) {
     FILE *f = fopen(filename, "w");
     if (f == NULL) {
         printf("Erreur ouverture fichier.\n");
@@ -13,10 +13,7 @@ void export_svg(const char *filename, ShapeList* list) {
     
     fprintf(f, "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800\" height=\"600\"> \n");
     
-    if (list == NULL) {
-        printf("NULL !\n");
-    }
-    printf("%p %p\n", list, NULL);
+    if (list == NULL) return;
     Shape_node* current = list->head;
     while (current != NULL) {
         
@@ -26,21 +23,23 @@ void export_svg(const char *filename, ShapeList* list) {
                 Square* sq = (Square*)current->data.square;
                 fprintf(f, "<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" stroke=\"%s\" fill=\"%s\" />\n",
                     sq->origin.x, sq->origin.y, sq->side, sq->side, sq->style->stroke_color, sq->style->fill_color);
-                    break;
+                break;
+            }
+            case CIRCLE: {
+                printf("Exporting Circle\n");
+                Circle* ci = (Circle*)current->data.circle;
+                if (ci != NULL && ci->style != NULL) {
+                    printf("de la couleur !\n");
+                    fprintf(f, "<circle cx=\"%d\" cy=\"%d\" r=\"%d\" stroke=\"%s\" fill=\"%s\" />\n",
+                            ci->center.x, ci->center.y, ci->radius,
+                            ci->style->stroke_color,
+                            ci->style->fill_color);
+
+                    printf("Cercle exporté avec succès!\n");
+                } else {
+                    printf("Attention: Cercle sans style détecté, ignoré.\n");
                 }
-                case CIRCLE: {
-                    Circle* ci = (Circle*)current->data.circle;
-                    if (ci && ci->style) {
-                        char stroke[32], fill[32];
-                        sprintf(stroke, "rgb(%d,%d,%d)", ci->style->stroke_color.r, ci->style->stroke_color.g, ci->style->stroke_color.b);
-                        sprintf(fill, "rgb(%d,%d,%d)", ci->style->fill_color.r, ci->style->fill_color.g, ci->style->fill_color.b);
-                        fprintf(f, "<circle cx=\"%d\" cy=\"%d\" r=\"%d\" stroke=\"%s\" fill=\"%s\" />\n",
-                            ci->center.x, ci->center.y, ci->radius, stroke, fill);
-                        printf("Cercle exporté avec succès!\n");
-                    } else {
-                        printf("Attention: Cercle sans style détecté, ignoré.\n");
-                    }
-                    break;
+                break;
             }
             case RECTANGLE: {
                 Rectangle* re = (Rectangle*)current->data.rectangle;
@@ -76,9 +75,12 @@ void export_svg(const char *filename, ShapeList* list) {
                 for (int j = 0; j < pl->nb_points; j++) {
                     fprintf(f, "%d,%d ", pl->points[j].x, pl->points[j].y);
                 }
-                fprintf(f, "\" stroke=\"%s\" fill=\"none\" />\n", pl->style->stroke_width);
+                fprintf(f, "\" stroke=\"%s\" fill=\"none\" />\n", pl->style->stroke_color);
                 break;
             }
+            default:
+                printf("Forme non reconnue");
+                return;
         }
         current = current->next;
     }
@@ -86,10 +88,4 @@ void export_svg(const char *filename, ShapeList* list) {
     fprintf(f, "</svg>\n");
     fclose(f);
     printf("Export SVG termine : %s\n", filename);
-
-#ifdef _WIN32
-    char commande[150];
-    sprintf(commande, "start %s", filename);
-    system(commande);
-#endif
 }

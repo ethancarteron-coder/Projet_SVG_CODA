@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "shapes.h"
 
-Polyline* polyline_info(Point* points, int nb_points) {
-    if (points == NULL || nb_points <= 0)
+Polyline* polyline_info(const Point* point, const int nb_points) {
+    if (point == NULL || nb_points <= 0)
         return NULL;
 
     Polyline* pl = malloc(sizeof(Polyline));
@@ -17,7 +17,7 @@ Polyline* polyline_info(Point* points, int nb_points) {
     }
 
     for (int i = 0; i < nb_points; i++) {
-        pl->points[i] = points[i];
+        pl->points[i] = point[i];
     }
 
     pl->nb_points = nb_points;
