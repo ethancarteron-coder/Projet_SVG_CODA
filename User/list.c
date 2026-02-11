@@ -4,9 +4,9 @@
 #include "shapes.h"
 #include "list.h"
 
-void add_shape (Shape_list* list, const Shapes_type type, const Shapes_data data) {
+void add_shape (ShapeList* list, const ShapeType type, const ShapeData data) {
     if  (list == NULL) return;
-    Shape_node* node = malloc(sizeof(Shape_node));
+    ShapeNode* node = malloc(sizeof(ShapeNode));
     if (node == NULL) return;
 
     node->type = type;
@@ -25,7 +25,7 @@ void add_shape (Shape_list* list, const Shapes_type type, const Shapes_data data
 
 
 
-void list_shapes(Shape_list* list) {
+void list_shapes(ShapeList* list) {
     if (list == NULL || list->size == 0) {
     printf(YELLOW"Aucune forme disponible.\n"RESET);
         return;
@@ -33,7 +33,7 @@ void list_shapes(Shape_list* list) {
 
     printf("Nombre total de formes: %d\n", list->size);
     int i = 1;
-    for (Shape_node* node = list->head; node != NULL; node = node->next, i++) {
+    for (ShapeNode* node = list->head; node != NULL; node = node->next, i++) {
         switch (node->type) {
             case CIRCLE:
                 if (node->data.circle) {

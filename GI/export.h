@@ -3,6 +3,6 @@
 
     #include "shapes.h"
 
-    void export_svg(const char* filename, Shape_list* list, Style* style);
+    void export_svg(const char* filename, ShapeList* list, Style* style);
 
 #endif

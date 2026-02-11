@@ -23,7 +23,7 @@ void symetry(Point* point, const Point center, bool symetry_x, bool symetry_y) {
 
 
 
-void apply_modif(Shape_node* shape) {
+void apply_modif(ShapeNode* shape) {
     if (shape == NULL) return;
     Modif* modif = NULL;
     Point center;

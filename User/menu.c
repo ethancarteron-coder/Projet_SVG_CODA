@@ -8,7 +8,7 @@
 #include "export.h"
 
 int main(void) {
-    Shape_list* list = malloc(sizeof(Shape_list));
+    ShapeList* list = malloc(sizeof(ShapeList));
     if (!list) {
         printf(RED"Erreur allocation liste\n"RESET);
         return 1;
@@ -48,7 +48,7 @@ int main(void) {
 }
 
 
-void creation_menu(Shape_list* list, Point origin, Style *style) {
+void creation_menu(ShapeList* list, Point origin, Style *style) {
     do {
         system("clear");
         printf (BLUE "===== MENU CREATION ===== \n" RESET);

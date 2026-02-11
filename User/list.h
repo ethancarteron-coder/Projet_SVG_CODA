@@ -3,8 +3,8 @@
 
     #include "../Shapes/shapes.h"
 
-    void add_shape (Shape_list* list, Shapes_type type, Shapes_data data);
+    void add_shape (ShapeList* list, ShapeType type, ShapeData data);
 
-    void list_shapes(Shape_list* list);
+    void list_shapes(ShapeList* list);
 
 #endif

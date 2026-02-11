@@ -6,7 +6,7 @@
 #include "menu.h"
 
 
-void ask_circle(Shape_list* list, Point center, Style* style) {
+void ask_circle(ShapeList* list, Point center, Style* style) {
     int radius;
     float stroke_width;
     char* fill_color = malloc(16);
@@ -44,11 +44,11 @@ void ask_circle(Shape_list* list, Point center, Style* style) {
     free(fill_color);
     free(stroke_color);
 
-    Shapes_data data = {.circle = ci};
+    ShapeData data = {.circle = ci};
     add_shape(list, CIRCLE, data);
 }
 
-void ask_ellipse (Shape_list* list, Point center) {
+void ask_ellipse (ShapeList* list, Point center) {
     int radius_x, radius_y;
     float stroke_width;
     char* fill_color = malloc(16);
@@ -88,11 +88,11 @@ void ask_ellipse (Shape_list* list, Point center) {
     free(fill_color);
     free(stroke_color);
 
-    Shapes_data data = {.ellipse = el};
+    ShapeData data = {.ellipse = el};
     add_shape(list, ELLIPSE, data);
 }
 
-void ask_line (Shape_list* list, Point start, Point end) {
+void ask_line (ShapeList* list, Point start, Point end) {
     float stroke_width;
     char* stroke_color = malloc(16);
     if (stroke_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
@@ -125,11 +125,11 @@ void ask_line (Shape_list* list, Point start, Point end) {
 
     free(stroke_color);
 
-    Shapes_data data = {.line = li};
+    ShapeData data = {.line = li};
     add_shape(list, LINE, data);
 }
 
-void ask_rectangle(Shape_list* list, Point origin) {
+void ask_rectangle(ShapeList* list, Point origin) {
     int lenght, width;
     float stroke_width;
     char* fill_color = malloc(16);
@@ -169,11 +169,11 @@ void ask_rectangle(Shape_list* list, Point origin) {
     free(fill_color);
     free(stroke_color);
 
-    Shapes_data data = {.rectangle = re};
+    ShapeData data = {.rectangle = re};
     add_shape(list, RECTANGLE, data);
 }
 
-void ask_square(Shape_list* list, Point origin) {
+void ask_square(ShapeList* list, Point origin) {
     int x, y, side;
     printf("Entrez la coordonnée x : "); origin.x = read_int();
     printf("Entrez la coordonnée y : "); origin.y = read_int();
@@ -183,7 +183,7 @@ void ask_square(Shape_list* list, Point origin) {
 
 }
 
-void ask_polygone(Shape_list* list, Point center) {
+void ask_polygone(ShapeList* list, Point center) {
     int nb_points;
     float stroke_width;
     char* fill_color = malloc(16);
@@ -246,11 +246,11 @@ void ask_polygone(Shape_list* list, Point center) {
     free(fill_color);
     free(stroke_color);
 
-    Shapes_data data = {.polygone = pg};
+    ShapeData data = {.polygone = pg};
     add_shape(list, POLYGONE, data);
 }
 
-void ask_polyline(Shape_list* list, Point center) {
+void ask_polyline(ShapeList* list, Point center) {
     int nb_points;
     float stroke_width;
     char* stroke_color = malloc(16);
@@ -300,6 +300,6 @@ void ask_polyline(Shape_list* list, Point center) {
     free(points);
     free(stroke_color);
 
-    Shapes_data data = {.polyline = pl};
+    ShapeData data = {.polyline = pl};
     add_shape(list, POLYLINE, data);
 }

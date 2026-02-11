@@ -4,7 +4,7 @@
 #include "shapes.h"
 #include <unistd.h>
 
-void export_svg(const char *filename, Shape_list* list, Style* style) {
+void export_svg(const char *filename, ShapeList* list, Style* style) {
     FILE *f = fopen(filename, "w");
     if (f == NULL) {
         printf("Erreur ouverture fichier.\n");
@@ -15,7 +15,7 @@ void export_svg(const char *filename, Shape_list* list, Style* style) {
     fprintf(f, "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"960\" height=\"540\"> \n");
     
     if (list == NULL) return;
-    Shape_node* current = list->head;
+    ShapeNode* current = list->head;
     while (current != NULL) {
         switch (current->type) {
             case SQUARE: {

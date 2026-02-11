@@ -5,6 +5,6 @@
     
     void deplace_shape(Point* point, int dx, int dy);
     void symetry(Point* point, const Point center, bool symetry_x, bool symetry_y);
-    void apply_modif(Shape_node* shape);
+    void apply_modif(ShapeNode* shape);
 
 #endif
