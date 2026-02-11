@@ -7,46 +7,43 @@
 #include "shapes.h"
 
 
-void ask_circle(ShapeList* list, const Point center, const Style* style) {
-    if (!read_int(center.x, "Entrez la coordonnée x : ")) {
-        printf(RED"Erreur lors de la saisie de la coordonnée x\n"RESET);
+void ask_circle(ShapeList* list) {
+    Point center;
+    int radius;
+    float stroke_width;
+
+    char* fill_color = malloc(16 * sizeof(char));
+    char* stroke_color = malloc(16 * sizeof(char));
+
+    if (!fill_color || !stroke_color) {
+        perror("Erreur allocation mémoire couleurs");
         return;
     }
 
-    if (!read_int(center.y, "Entrez la coordonnée y : ")) {
-        printf(RED"Erreur lors de la saisie de la coordonnée y\n"RESET);
-        return;
-    }
+    if (!read_int(&center.x, "Entrez la coordonnée x : ")) return;
+    if (!read_int(&center.y, "Entrez la coordonnée y : ")) return;
 
-    if (!read_int(Circle* radius, "Entrez le rayon : ")) {
-        printf(RED"Erreur lors de la saisie du rayon\n"RESET);
-        return;
-    }
-    printf("Entrez le rayon : ");
-    const int radius = read_int();
-    printf("Entrez l'épaisseur du trait : ");
-    const float stroke_width = read_float();
+    if (!read_int(&radius, "Entrez le rayon : ")) return;
 
-    if (!seize_color(style->fill_color, 16, "Entrez la couleur du fond : ")) {
-        printf(RED"Erreur lors de la saisie de la couleur de fond\n"RESET);
-        return;
-    }
+    if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) return;
 
-    if (!seize_color(style->stroke_color, 16, "Entrez la couleur du trait : ")) {
-        printf(RED"Erreur lors de la saisie de la couleur du trait\n"RESET);
-        return;
+    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) {
+        free(fill_color); free(stroke_color); return;
+    }
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
+        free(fill_color); free(stroke_color); return;
     }
 
     Circle* ci = circle_info(center, radius);
     if (ci == NULL) {
-        printf(RED"Erreur lors de la création du cercle\n"RESET);
+        free(fill_color); free(stroke_color);
         return;
     }
 
     if (ci->style != NULL) {
         free_style(ci->style);
     }
-    ci->style = style_info(style->stroke_color, style->fill_color, stroke_width);
+    ci->style = style_info(stroke_color, fill_color, stroke_width);
 
     const ShapeData data = {.circle = ci};
     add_shape(list, CIRCLE, data);
