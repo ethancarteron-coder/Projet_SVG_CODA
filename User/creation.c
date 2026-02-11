@@ -155,7 +155,7 @@ void ask_polyline(ShapeList* list) {
         return;
     }
 
-    for (int i = 0; i < nb_points; i++) {
+    for (int i = 0; i < intput_value; i++) {
         printf("--- Point %d ---\n", i + 1);
         if (!read_int(&points[i].x, "x : ")) { free(points); return; }
         if (!read_int(&points[i].y, "y : ")) { free(points); return; }
@@ -164,7 +164,7 @@ void ask_polyline(ShapeList* list) {
     if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) { free(points); return; }
     if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) { free(points); return; }
 
-    Polyline* pl = polyline_info(points, nb_points);
+    Polyline* pl = polyline_info(points, intput_value);
 
     free(points);
 
@@ -197,7 +197,7 @@ void ask_polygone(ShapeList* list) {
         return;
     }
 
-    for (int i = 0; i < nb_points; i++) {
+    for (int i = 0; i < input_value; i++) {
         printf("--- Point %d ---\n", i + 1);
         if (!read_int(&points[i].x, "x : ")) { free(points); return; }
         if (!read_int(&points[i].y, "y : ")) { free(points); return; }
