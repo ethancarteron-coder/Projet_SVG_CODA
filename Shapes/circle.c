@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "shapes.h"
+#include "utils.h"
 
 int nb_forme = 0;
 
-Circle* circle_info(Point center, int radius) {
+Circle* circle_info(const Point center, const int radius, Style* style) {
 
     Circle* ci = malloc(sizeof(Circle));
     if (ci == NULL) return NULL;
 
     ci->center = center;
     ci->radius = radius;
+    ci->style = style;
 
-    const char* stroke_color;
-    const char* fill_color;
-    float stroke_width;
-    ci->style = style_info(stroke_color, fill_color, stroke_width);
+    ci->style = style_info(style->stroke_color, style->fill_color, style->stroke_width);
     if (ci->style == NULL) {
         free(ci);
         return NULL;
@@ -31,7 +30,7 @@ Circle* circle_info(Point center, int radius) {
     nb_forme++;
     printf(GREEN"Cercle créé avec succès !\n"RESET);
     printf("appuyez sur entrer pour continuer...\n");
-    scanf("%*c", getchar());
+    buffer_clean();
     return ci;
 }
 

@@ -144,7 +144,7 @@
     } ShapeList;
 
 
-    Circle* circle_info(Point center, int radius);
+    Circle* circle_info(Point center, int radius, Style* style);
     void free_circle (Circle* ci);
 
     Ellipse* ellipse_info(Point center, int radius_x, int radius_y);
