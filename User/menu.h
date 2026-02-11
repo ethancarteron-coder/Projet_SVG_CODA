@@ -5,7 +5,8 @@
     #include "shapes.h"
     
     int main (void);
+
     void creation_menu(Shape_list* list, Point origin, Style *style);
-    void modification_menu(Shape_list* list);
+    void modification_menu(Point* origin);
 
 #endif

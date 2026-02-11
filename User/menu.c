@@ -19,10 +19,11 @@ int main(void) {
     list->tail = NULL;
 
     Style* style = NULL;
-    Point origin = {0,0};
     int choice;
 
     do {
+        Point origin = {0,0};
+
         system("clear");
         printf(BLUE"===== MENU PRINCIPAL ===== \n" RESET);
         printf("1: Créer/ajouter une forme \n");
@@ -35,7 +36,7 @@ int main(void) {
 
         switch (choice) {
             case 1: creation_menu(list, origin, style); break;
-            case 2: modification_menu(list); break;
+            case 2: modification_menu(origin); break;
             case 3: list_shapes(list); break;
             case 4: export_svg("affichage.svg", list, style); break;
             case 0: break;
@@ -48,7 +49,6 @@ int main(void) {
 
 
 void creation_menu(Shape_list* list, Point origin, Style *style) {
-    int choice;
     do {
         system("clear");
         printf (BLUE "===== MENU CREATION ===== \n" RESET);
@@ -62,7 +62,8 @@ void creation_menu(Shape_list* list, Point origin, Style *style) {
         printf ("8: créer polyligne \n");
         printf ("0: revenir au menu \n");
         printf (BLUE "Votre choix : " RESET);
-        choice = read_int();
+
+        const int choice = read_int();
 
         switch (choice) {
             case 1: export_svg("affichage.svg", list, style); break;
@@ -82,8 +83,7 @@ void creation_menu(Shape_list* list, Point origin, Style *style) {
 }
 
 
-void modification_menu(Shape_list* list) {
-    int choice;
+void modification_menu(Point* origin) {
     do {
         system("clear");
         printf (BLUE "===== MENU MODIFICATION ===== \n" RESET);
@@ -93,13 +93,15 @@ void modification_menu(Shape_list* list) {
         printf("4: Modifier le style \n");
         printf("0: retour au menu\n");
         printf(BLUE "Votre choix : " RESET);
-        choice = read_int();
+        const int choice = read_int();
 
         switch (choice) {
         case 1:
-            printf("Veuillez indiquer le déplacement en x : "); int dx = read_int();
-            printf("Veuillez indiquer le déplacement en y : "); int dy = read_int();
-            deplace_shape(list, dx, dy);
+            printf("Veuillez indiquer le déplacement en x : ");
+            const int dx = read_int();
+            printf("Veuillez indiquer le déplacement en y : ");
+            const int dy = read_int();
+            deplace_shape(origin, dx, dy);
             break;
         case 2: break;
         case 3: break;
