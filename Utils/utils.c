@@ -6,30 +6,33 @@
 
 
 const char* list_color[] = {"white", "black", "red", "blue", "green", "yellow"};
-
 const int size_list_color = sizeof(list_color) / sizeof(list_color [0]);
-
-float read_float() {
-    float value;
-    while (scanf("%f", &value) != 1) {
-        printf(RED "Entrée invalide. Veuillez entrer un nombre : " RESET);
-        buffer_clean();
-    }
-    return value;
-}
-
-int read_int() {
-    int value;
-    while (scanf("%d", &value) != 1) {
-        printf(RED"Entrée invalide. Veuillez entrer un nombre entier : "RESET);
-        buffer_clean();
-    }
-    return value;
-}
 
 void buffer_clean() {
     int character;
     while ((character = getchar()) != '\n' && character != EOF);
+}
+
+bool read_float(float* value, char* message) {
+    if (!value) return false;
+    printf("%s", message);
+    while (scanf("%f", value) != 1) {
+        printf(RED "Entrée invalide. Veuillez entrer un nombre : " RESET);
+        buffer_clean();
+    }
+    return true;
+}
+
+bool read_int(int* value, char* message) {
+    if (!value) return false;
+    printf("%s", message);
+    while (scanf("%d", value) != 1) {
+        printf(RED"Entrée invalide..."RESET);
+        buffer_clean();
+        printf("%s", message);
+    }
+    buffer_clean();
+    return true;
 }
 
 bool hexadecimal(const char* character) {
@@ -64,7 +67,7 @@ bool read_color(const char* character) {
 bool seize_color(char* buffer, const int buflen, char* message) {
     if (!buffer || !message || buflen == 0) return false;
 
-    while (1) {
+    while (!read_color(buffer)) {
         printf("%s", message);
         if (fgets(buffer, buflen, stdin) == NULL) return false;
 
@@ -73,7 +76,6 @@ bool seize_color(char* buffer, const int buflen, char* message) {
             buffer[user_value] = '\0';
         }
 
-        if (read_color(buffer)) return true;
         printf(RED"\nCouleur invalide ...\n"RESET);
         buffer_clean();
         printf(YELLOW"Veuillez entrer une couleur de la liste : ");
@@ -82,4 +84,5 @@ bool seize_color(char* buffer, const int buflen, char* message) {
         }
         printf("ou un code hexadécimal au format #RRGGBB.\n" RESET);
     }
+    return true;
 }

@@ -14,7 +14,7 @@ void add_shape (ShapeList* list, const ShapeType type, const ShapeData data) {
     node->next = NULL;
     node->prev = list->tail;
 
-    if  (list->tail != NULL)
+    if (list->tail != NULL)
         list->tail->next = node;
     else {
         list->head = node;

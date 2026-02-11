@@ -12,11 +12,11 @@
     #define YELLOW "\033[1;33m"
     #define RESET  "\033[1;0m"
 
-    float read_float();
-    
-    int read_int();
-
     void buffer_clean();
+
+    bool read_float(float* value, char* message);
+    
+    bool read_int(int* value, char* message);
 
     bool hexadecimal(const char* character);
 

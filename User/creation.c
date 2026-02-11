@@ -7,18 +7,31 @@
 #include "shapes.h"
 
 
-void ask_circle(ShapeList* list, Point center, const Style* style) {
-    printf("Entrez la coordonnée x : "); center.x = read_int();
-    printf("Entrez la coordonnée y : "); center.y = read_int();
+void ask_circle(ShapeList* list, const Point center, const Style* style) {
+    if (!read_int(center.x, "Entrez la coordonnée x : ")) {
+        printf(RED"Erreur lors de la saisie de la coordonnée x\n"RESET);
+        return;
+    }
+
+    if (!read_int(center.y, "Entrez la coordonnée y : ")) {
+        printf(RED"Erreur lors de la saisie de la coordonnée y\n"RESET);
+        return;
+    }
+
+    if (!read_int(Circle* radius, "Entrez le rayon : ")) {
+        printf(RED"Erreur lors de la saisie du rayon\n"RESET);
+        return;
+    }
     printf("Entrez le rayon : ");
     const int radius = read_int();
     printf("Entrez l'épaisseur du trait : ");
     const float stroke_width = read_float();
-    buffer_clean();
+
     if (!seize_color(style->fill_color, 16, "Entrez la couleur du fond : ")) {
         printf(RED"Erreur lors de la saisie de la couleur de fond\n"RESET);
         return;
     }
+
     if (!seize_color(style->stroke_color, 16, "Entrez la couleur du trait : ")) {
         printf(RED"Erreur lors de la saisie de la couleur du trait\n"RESET);
         return;
