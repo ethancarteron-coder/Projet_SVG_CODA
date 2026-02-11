@@ -6,17 +6,15 @@
 #include "utils.h"
 #include "shapes.h"
 
-
 void ask_circle(ShapeList* list) {
     Point center;
     int radius;
     float stroke_width;
-
     char fill_color[16];
     char stroke_color[16];
 
-    if (!read_int(&center.x, "Entrez la coordonnée x : ")) return;
-    if (!read_int(&center.y, "Entrez la coordonnée y : ")) return;
+    if (!read_int(&center.x, "Entrez la coordonnée x du centre : ")) return;
+    if (!read_int(&center.y, "Entrez la coordonnée y du centre : ")) return;
     if (!read_int(&radius, "Entrez le rayon : ")) return;
     if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) return;
 
@@ -26,269 +24,195 @@ void ask_circle(ShapeList* list) {
     Circle* ci = circle_info(center, radius);
     if (ci == NULL) return;
 
-    if (ci->style != NULL) {
-        free_style(ci->style);
-    }
-
+    if (ci->style != NULL) free_style(ci->style);
     ci->style = style_info(stroke_color, fill_color, stroke_width);
 
     const ShapeData data = {.circle = ci};
     add_shape(list, CIRCLE, data);
 }
 
-void ask_ellipse (ShapeList* list, Point center) {
-    int radius_x, radius_y;
+void ask_ellipse(ShapeList* list) {
+    Point center;
+    int radius_x;
+    int radius_y;
     float stroke_width;
-    char* fill_color = malloc(16);
-    if (fill_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
-    char* stroke_color = malloc(16);
-    if (stroke_color == NULL) { free(fill_color); perror("malloc"); exit(EXIT_FAILURE); }
+    char fill_color[16];
+    char stroke_color[16];
 
-    printf("Entrez la coordonnée x : "); center.x = read_int();
-    printf("Entrez la coordonnée y : "); center.y = read_int();
-    printf("Entrez le rayon x : "); radius_x = read_int();
-    printf("Entrez le rayon y : "); radius_y = read_int();
-    printf("Entrez l'épaisseur du trait : "); stroke_width = read_float();
-    buffer_clean();
-    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) {
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
-    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
+    if (!read_int(&center.x, "Entrez la coordonnée x du centre : ")) return;
+    if (!read_int(&center.y, "Entrez la coordonnée y du centre : ")) return;
+    if (!read_int(&radius_x, "Entrez le rayon X : ")) return;
+    if (!read_int(&radius_y, "Entrez le rayon Y : ")) return;
+    if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) return;
+
+    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) return;
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) return;
 
     Ellipse* el = ellipse_info(center, radius_x, radius_y);
-    if (el == NULL) {
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
+    if (el == NULL) return;
 
-    if (el->style != NULL) {
-        free_style(el->style);
-    }
+    if (el->style != NULL) free_style(el->style);
     el->style = style_info(stroke_color, fill_color, stroke_width);
 
-    free(fill_color);
-    free(stroke_color);
-
-    ShapeData data = {.ellipse = el};
+    const ShapeData data = {.ellipse = el};
     add_shape(list, ELLIPSE, data);
 }
 
-void ask_line (ShapeList* list, Point start, Point end) {
+void ask_line(ShapeList* list) {
+    Point start;
+    Point end;
     float stroke_width;
-    char* stroke_color = malloc(16);
-    if (stroke_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
+    char stroke_color[16];
 
-    printf("Point de départ :\n");
-    printf("Entrez la coordonnée x : "); start.x = read_int();
-    printf("Entrez la coordonnée y : "); start.y = read_int();
-    
-    printf("\nPoint d'arrivée :\n");
-    printf("Entrez la coordonnée x : "); end.x = read_int();
-    printf("Entrez la coordonnée y : "); end.y = read_int();
+    printf("--- Point de départ ---\n");
+    if (!read_int(&start.x, "x : ")) return;
+    if (!read_int(&start.y, "y : ")) return;
 
-    printf("Entrez l'épaisseur du trait : "); stroke_width = read_float();
-    buffer_clean();
-    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
-        free(stroke_color);
-        return;
-    }
+    printf("--- Point d'arrivée ---\n");
+    if (!read_int(&end.x, "x : ")) return;
+    if (!read_int(&end.y, "y : ")) return;
+
+    if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) return;
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) return;
 
     Line* li = line_info(start, end);
-    if (li == NULL) {
-        free(stroke_color);
-        return;
-    }
+    if (li == NULL) return;
 
-    if (li->style != NULL) {
-        free_style(li->style);
-    }
+    if (li->style != NULL) free_style(li->style);
     li->style = style_info(stroke_color, "none", stroke_width);
 
-    free(stroke_color);
-
-    ShapeData data = {.line = li};
+    const ShapeData data = {.line = li};
     add_shape(list, LINE, data);
 }
 
-void ask_rectangle(ShapeList* list, Point origin) {
-    char* fill_color = malloc(16);
-    if (fill_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
-    char* stroke_color = malloc(16);
-    if (stroke_color == NULL) { free(fill_color); perror("malloc"); exit(EXIT_FAILURE); }
+void ask_rectangle(ShapeList* list) {
+    Point origin;
+    int lenght;
+    int width;
+    float stroke_width;
+    char fill_color[16];
+    char stroke_color[16];
 
-    printf("Entrez la coordonnée x : "); origin.x = read_int();
-    printf("Entrez la coordonnée y : "); origin.y = read_int();
-    printf("Entrez la longueur : ");
-    const int lenght = read_int();
-    printf("Entrez la largeur : ");
-    const int width = read_int();
-    printf("Entrez l'épaisseur du trait : ");
-    const float stroke_width = read_float();
-    buffer_clean();
-    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) {
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
-    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
+    if (!read_int(&origin.x, "Entrez la coordonnée x (coin haut gauche) : ")) return;
+    if (!read_int(&origin.y, "Entrez la coordonnée y (coin haut gauche) : ")) return;
+    if (!read_int(&lenght, "Entrez la longueur : ")) return;
+    if (!read_int(&width, "Entrez la largeur : ")) return;
+    if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) return;
+
+    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) return;
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) return;
 
     Rectangle* re = rectangle_info(origin, lenght, width);
-    if (re == NULL) {
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
+    if (re == NULL) return;
 
-    if (re->style != NULL) {
-        free_style(re->style);
-    }
+    if (re->style != NULL) free_style(re->style);
     re->style = style_info(stroke_color, fill_color, stroke_width);
 
-    free(fill_color);
-    free(stroke_color);
-
-    ShapeData data = {.rectangle = re};
+    const ShapeData data = {.rectangle = re};
     add_shape(list, RECTANGLE, data);
 }
 
-void ask_square(ShapeList* list, Point origin) {
-    int x, y, side;
-    printf("Entrez la coordonnée x : "); origin.x = read_int();
-    printf("Entrez la coordonnée y : "); origin.y = read_int();
-    printf("Entrez le côté : "); side =  read_int();
+void ask_square(ShapeList* list) {
+    Point origin;
+    int side;
+    float stroke_width;
+    char fill_color[16];
+    char stroke_color[16];
 
-    Circle* square_info (origin, side);
+    if (!read_int(&origin.x, "Entrez la coordonnée x (coin haut gauche) : ")) return;
+    if (!read_int(&origin.y, "Entrez la coordonnée y (coin haut gauche) : ")) return;
+    if (!read_int(&side, "Entrez la longueur du côté : ")) return;
+    if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) return;
 
+    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) return;
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) return;
+
+    Square* sq = square_info(origin, side);
+    if (sq == NULL) return;
+
+    if (sq->style != NULL) free_style(sq->style);
+    sq->style = style_info(stroke_color, fill_color, stroke_width);
+
+    const ShapeData data = {.square = sq};
+    add_shape(list, SQUARE, data);
 }
 
-void ask_polygone(ShapeList* list, Point center) {
+void ask_polyline(ShapeList* list) {
     int nb_points;
     float stroke_width;
-    char* fill_color = malloc(16);
-    if (fill_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
-    char* stroke_color = malloc(16);
-    if (stroke_color == NULL) { free(fill_color); perror("malloc"); exit(EXIT_FAILURE); }
+    char stroke_color[16];
 
-    printf("Entrez le nombre de points (minimum 3) : ");
-    nb_points = read_int();
-    if (nb_points < 3) {
-        printf(RED"Le polygone doit avoir au moins 3 points.\n"RESET);
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
-
-    Point* points = malloc(sizeof(Point) * nb_points);
-    if (points == NULL) {
-        free(fill_color);
-        free(stroke_color);
-        perror("malloc");
-        return;
-    }
-
-    for (int i = 0; i < nb_points; i++) {
-        printf("Point %d :\n", i + 1);
-        printf("Entrez la coordonnée x : "); points[i].x = read_int();
-        printf("Entrez la coordonnée y : "); points[i].y = read_int();
-    }
-
-    printf("Entrez l'épaisseur du trait : "); stroke_width = read_float();
-    buffer_clean();
-    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) {
-        free(points);
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
-    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
-        free(points);
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
-
-    Polygone* pg = polygone_info(points, nb_points);
-    if (pg == NULL) {
-        free(points);
-        free(fill_color);
-        free(stroke_color);
-        return;
-    }
-
-    if (pg->style != NULL) {
-        free_style(pg->style);
-    }
-    pg->style = style_info(stroke_color, fill_color, stroke_width);
-
-    free(points);
-    free(fill_color);
-    free(stroke_color);
-
-    ShapeData data = {.polygone = pg};
-    add_shape(list, POLYGONE, data);
-}
-
-void ask_polyline(ShapeList* list, Point center) {
-    int nb_points;
-    float stroke_width;
-    char* stroke_color = malloc(16);
-    if (stroke_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
-
-    printf("Entrez le nombre de points (minimum 2) : ");
-    nb_points = read_int();
+    if (!read_int(&nb_points, "Entrez le nombre de points (min 2) : ")) return;
     if (nb_points < 2) {
-        printf(RED"La polyligne doit avoir au moins 2 points.\n"RESET);
-        free(stroke_color);
+        printf(RED "Il faut au moins 2 points.\n" RESET);
         return;
     }
 
     Point* points = malloc(sizeof(Point) * nb_points);
     if (points == NULL) {
-        free(stroke_color);
-        perror("malloc");
+        perror("Erreur allocation points");
         return;
     }
 
     for (int i = 0; i < nb_points; i++) {
-        printf("Point %d :\n", i + 1);
-        printf("Entrez la coordonnée x : "); points[i].x = read_int();
-        printf("Entrez la coordonnée y : "); points[i].y = read_int();
+        printf("--- Point %d ---\n", i + 1);
+        if (!read_int(&points[i].x, "x : ")) { free(points); return; }
+        if (!read_int(&points[i].y, "y : ")) { free(points); return; }
     }
 
-    printf("Entrez l'épaisseur du trait : "); stroke_width = read_float();
-    buffer_clean();
-    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
-        free(points);
-        free(stroke_color);
-        return;
-    }
+    if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) { free(points); return; }
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) { free(points); return; }
 
     Polyline* pl = polyline_info(points, nb_points);
-    if (pl == NULL) {
-        free(points);
-        free(stroke_color);
+
+    free(points);
+
+    if (pl == NULL) return;
+
+    if (pl->style != NULL) free_style(pl->style);
+    pl->style = style_info(stroke_color, "none", stroke_width);
+
+    const ShapeData data = {.polyline = pl};
+    add_shape(list, POLYLINE, data);
+}
+
+void ask_polygone(ShapeList* list) {
+    int nb_points;
+    float stroke_width;
+    char fill_color[16];
+    char stroke_color[16];
+
+    if (!read_int(&nb_points, "Entrez le nombre de points (min 3) : ")) return;
+    if (nb_points < 3) {
+        printf(RED "Il faut au moins 3 points pour un polygone.\n" RESET);
         return;
     }
 
-    if (pl->style != NULL) {
-        free_style(pl->style);
+    Point* points = malloc(sizeof(Point) * nb_points);
+    if (points == NULL) {
+        perror("Erreur allocation points");
+        return;
     }
-    pl->style = style_info(stroke_color, "none", stroke_width);
+
+    for (int i = 0; i < nb_points; i++) {
+        printf("--- Point %d ---\n", i + 1);
+        if (!read_int(&points[i].x, "x : ")) { free(points); return; }
+        if (!read_int(&points[i].y, "y : ")) { free(points); return; }
+    }
+
+    if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) { free(points); return; }
+    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) { free(points); return; }
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) { free(points); return; }
+
+    Polygone* pg = polygone_info(points, nb_points);
 
     free(points);
-    free(stroke_color);
 
-    ShapeData data = {.polyline = pl};
-    add_shape(list, POLYLINE, data);
+    if (pg == NULL) return;
+
+    if (pg->style != NULL) free_style(pg->style);
+    pg->style = style_info(stroke_color, fill_color, stroke_width);
+
+    const ShapeData data = {.polygone = pg};
+    add_shape(list, POLYGONE, data);
 }
