@@ -5,7 +5,7 @@
     
     int main (void);
 
-    void creation_menu(ShapeList* list, Point origin, Style *style);
+    void creation_menu(ShapeList* list, Style *style);
 
     void modification_menu(Point* origin);
 

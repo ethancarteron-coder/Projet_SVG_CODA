@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "menu.h"
 #include "creation.h"
 #include "list.h"
 #include "modification.h"
@@ -14,8 +15,6 @@ int main(void) {
     int choice;
 
     do {
-        Point origin = {0,0};
-
         system("clear");
         printf(BLUE"===== MENU PRINCIPAL ===== \n" RESET);
         printf("1: Créer/ajouter une forme \n");
@@ -23,11 +22,12 @@ int main(void) {
         printf("3: Lister les formes \n");
         printf("4: Afficher \n");
         printf("0: Quitter\n");
+
         if (!read_int(&choice, BLUE"Votre choix : " RESET)) return 0;
 
         switch (choice) {
-            case 1: creation_menu(list, origin, style); break;
-            case 2: modification_menu(origin); break;
+            case 1: creation_menu(list, style); break;
+            //case 2: modification_menu(origin); break;
             case 3: list_shapes(list); break;
             case 4: export_svg("affichage.svg", list, style); break;
             case 0: break;
@@ -39,7 +39,8 @@ int main(void) {
 }
 
 
-void creation_menu(ShapeList* list, Point origin, Style *style) {
+void creation_menu(ShapeList* list, Style *style) {
+    int choice;
     do {
         system("clear");
         printf (BLUE "===== MENU CREATION ===== \n" RESET);
@@ -52,19 +53,17 @@ void creation_menu(ShapeList* list, Point origin, Style *style) {
         printf ("7: créer polygone \n");
         printf ("8: créer polyligne \n");
         printf ("0: revenir au menu \n");
-        printf (BLUE "Votre choix : " RESET);
-
-        const int choice = read_int();
+        if (!read_int(&choice, BLUE"Votre choix : " RESET)) return;
 
         switch (choice) {
             case 1: export_svg("affichage.svg", list, style); break;
-            case 2: ask_circle(list, origin, style); break;
-            case 3: ask_ellipse(list, origin); break;
-            case 4: ask_line(list, origin, origin); break;
-            case 5: ask_rectangle(list, origin); break;
-            case 6: ask_square(list, origin); break;
-            case 7: ask_polygone(list, origin); break;
-            case 8: ask_polyline(list, origin); break;
+            case 2: ask_circle(list); break;
+            case 3: ask_ellipse(list); break;
+            case 4: ask_line(list); break;
+            case 5: ask_rectangle(list); break;
+            case 6: ask_square(list); break;
+            case 7: ask_polygone(list); break;
+            case 8: ask_polyline(list); break;
             case 0:
                 printf(BLUE "Retour au menu principal \n" RESET);
                 return;
@@ -74,37 +73,37 @@ void creation_menu(ShapeList* list, Point origin, Style *style) {
 }
 
 
-void modification_menu(Point* origin) {
-    do {
-        system("clear");
-        printf (BLUE "===== MENU MODIFICATION ===== \n" RESET);
-        printf("1: Déplacer forme \n");
-        printf("2: Rotation forme \n");
-        printf("3: Symétrie \n");
-        printf("4: Modifier le style \n");
-        printf("0: retour au menu\n");
-        printf(BLUE "Votre choix : " RESET);
-        const int choice = read_int();
-
-        switch (choice) {
-        case 1:
-            printf("Veuillez indiquer le déplacement en x : ");
-            const int dx = read_int();
-            printf("Veuillez indiquer le déplacement en y : ");
-            const int dy = read_int();
-            deplace_shape(origin, dx, dy);
-            break;
-        case 2: break;
-        case 3: break;
-        case 4: break;
-        case 0:
-            printf(BLUE"Retour au menu principal\n" RESET);
-            return;
-        default:
-            printf("Choix invalide, veuillez réessayer.\n");
-            break;
-    }
-    printf("\nAppuyez sur Entrée pour continuer...");
-    getchar();
-    } while (1);
-}
+// void modification_menu(Point* origin) {
+//     do {
+//         system("clear");
+//         printf (BLUE "===== MENU MODIFICATION ===== \n" RESET);
+//         printf("1: Déplacer forme \n");
+//         printf("2: Rotation forme \n");
+//         printf("3: Symétrie \n");
+//         printf("4: Modifier le style \n");
+//         printf("0: retour au menu\n");
+//         printf(BLUE "Votre choix : " RESET);
+//         const int choice = read_int();
+//
+//         switch (choice) {
+//         case 1:
+//             printf("Veuillez indiquer le déplacement en x : ");
+//             const int dx = read_int();
+//             printf("Veuillez indiquer le déplacement en y : ");
+//             const int dy = read_int();
+//             deplace_shape(origin, dx, dy);
+//             break;
+//         case 2: break;
+//         case 3: break;
+//         case 4: break;
+//         case 0:
+//             printf(BLUE"Retour au menu principal\n" RESET);
+//             return;
+//         default:
+//             printf("Choix invalide, veuillez réessayer.\n");
+//             break;
+//     }
+//     printf("\nAppuyez sur Entrée pour continuer...");
+//     getchar();
+//     } while (1);
+// }

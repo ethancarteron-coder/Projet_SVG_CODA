@@ -5,16 +5,15 @@
 
 int nb_forme = 0;
 
-Circle* circle_info(const Point center, const int radius, Style* style) {
+Circle* circle_info(const Point center, const int radius) {
 
     Circle* ci = malloc(sizeof(Circle));
     if (ci == NULL) return NULL;
 
     ci->center = center;
     ci->radius = radius;
-    ci->style = style;
 
-    ci->style = style_info(style->stroke_color, style->fill_color, style->stroke_width);
+    ci->style = style_info(ci->style->stroke_color, ci->style->fill_color, ci->style->stroke_width);
     if (ci->style == NULL) {
         free(ci);
         return NULL;
