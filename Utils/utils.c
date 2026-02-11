@@ -61,13 +61,17 @@ bool read_color(const char* character) {
     return is_hex || is_std;
 }
 
-bool seize_color(char* buffer, int buflen, char* message) {
+bool seize_color(char* buffer, const int buflen, char* message) {
     if (!buffer || !message || buflen == 0) return false;
 
     while (1) {
         printf("%s", message);
         if (fgets(buffer, buflen, stdin) == NULL) return false;
-        buffer[strcspn(buffer, "\r\n")] = '\0';
+
+        const size_t user_value = strcspn(buffer, "\r\n");
+        if (user_value < (size_t)buflen) {
+            buffer[user_value] = '\0';
+        }
 
         if (read_color(buffer)) return true;
         printf(RED"\nCouleur invalide ...\n"RESET);
