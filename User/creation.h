@@ -3,7 +3,7 @@
 
     #include "shapes.h"
 
-    void ask_circle (ShapeList* list, Point center, Style* style);
+    void ask_circle (ShapeList* list, Point center, const Style* style);
 
     void ask_ellipse (ShapeList* list, Point center);
 

@@ -1,37 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "list.h"
 #include "utils.h"
 #include "shapes.h"
-#include "menu.h"
 
 
-void ask_circle(ShapeList* list, Point center, Style* style) {
-    int radius;
-    float stroke_width;
-    char* fill_color = malloc(16);
-    if (fill_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
-    char* stroke_color = malloc(16);
-    if (stroke_color == NULL) { free(fill_color); perror("malloc"); exit(EXIT_FAILURE); }
-
+void ask_circle(ShapeList* list, Point center, const Style* style) {
     printf("Entrez la coordonnée x : "); center.x = read_int();
     printf("Entrez la coordonnée y : "); center.y = read_int();
-    printf("Entrez le rayon : "); radius = read_int();
-    printf("Entrez l'épaisseur du trait : "); stroke_width = read_float();
+    printf("Entrez le rayon : ");
+    const int radius = read_int();
+    printf("Entrez l'épaisseur du trait : ");
+    const float stroke_width = read_float();
     buffer_clean();
-    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) {
+    if (!seize_color(style->fill_color, 16, "Entrez la couleur du fond : ")) {
         printf(RED"Erreur lors de la saisie de la couleur de fond\n"RESET);
         return;
     }
-    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
+    if (!seize_color(style->stroke_color, 16, "Entrez la couleur du trait : ")) {
         printf(RED"Erreur lors de la saisie de la couleur du trait\n"RESET);
         return;
     }
 
     Circle* ci = circle_info(center, radius);
     if (ci == NULL) {
-        free(fill_color);
-        free(stroke_color);
         printf(RED"Erreur lors de la création du cercle\n"RESET);
         return;
     }
@@ -39,12 +33,9 @@ void ask_circle(ShapeList* list, Point center, Style* style) {
     if (ci->style != NULL) {
         free_style(ci->style);
     }
-    ci->style = style_info(stroke_color, fill_color, stroke_width);
+    ci->style = style_info(style->stroke_color, style->fill_color, stroke_width);
 
-    free(fill_color);
-    free(stroke_color);
-
-    ShapeData data = {.circle = ci};
+    const ShapeData data = {.circle = ci};
     add_shape(list, CIRCLE, data);
 }
 
@@ -130,8 +121,6 @@ void ask_line (ShapeList* list, Point start, Point end) {
 }
 
 void ask_rectangle(ShapeList* list, Point origin) {
-    int lenght, width;
-    float stroke_width;
     char* fill_color = malloc(16);
     if (fill_color == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
     char* stroke_color = malloc(16);
@@ -139,9 +128,12 @@ void ask_rectangle(ShapeList* list, Point origin) {
 
     printf("Entrez la coordonnée x : "); origin.x = read_int();
     printf("Entrez la coordonnée y : "); origin.y = read_int();
-    printf("Entrez la longueur : "); lenght = read_int();
-    printf("Entrez la largeur : "); width = read_int();
-    printf("Entrez l'épaisseur du trait : "); stroke_width = read_float();
+    printf("Entrez la longueur : ");
+    const int lenght = read_int();
+    printf("Entrez la largeur : ");
+    const int width = read_int();
+    printf("Entrez l'épaisseur du trait : ");
+    const float stroke_width = read_float();
     buffer_clean();
     if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) {
         free(fill_color);
@@ -179,7 +171,7 @@ void ask_square(ShapeList* list, Point origin) {
     printf("Entrez la coordonnée y : "); origin.y = read_int();
     printf("Entrez le côté : "); side =  read_int();
 
-    Circle* circle_info (origin, side);
+    Circle* square_info (origin, side);
 
 }
 

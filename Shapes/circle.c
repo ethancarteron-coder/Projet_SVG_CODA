@@ -15,7 +15,7 @@ Circle* circle_info(Point center, int radius) {
     const char* stroke_color;
     const char* fill_color;
     float stroke_width;
-    ci->style = style_info("black", "white", 1.0f);
+    ci->style = style_info(stroke_color, fill_color, stroke_width);
     if (ci->style == NULL) {
         free(ci);
         return NULL;

@@ -56,8 +56,8 @@ bool standard_color (const char* character) {
 bool read_color(const char* character) {
     if (character == NULL) return false;
     
-    bool is_hex = hexadecimal(character);    
-    bool is_std = standard_color(character);
+    const bool is_hex = hexadecimal(character);
+    const bool is_std = standard_color(character);
     return is_hex || is_std;
 }
 
