@@ -138,15 +138,16 @@ void ask_square(ShapeList* list) {
 }
 
 void ask_polyline(ShapeList* list) {
-    int nb_points;
+    int intput_value;
     float stroke_width;
     char stroke_color[16];
 
-    if (!read_int(&nb_points, "Entrez le nombre de points (min 2) : ")) return;
-    if (nb_points < 2) {
+    if (!read_int(&intput_value, "Entrez le nombre de points (min 2) : ")) return;
+    if (intput_value < 2) {
         printf(RED "Il faut au moins 2 points.\n" RESET);
         return;
     }
+    const size_t nb_points = (size_t)intput_value;
 
     Point* points = malloc(sizeof(Point) * nb_points);
     if (points == NULL) {
@@ -177,16 +178,18 @@ void ask_polyline(ShapeList* list) {
 }
 
 void ask_polygone(ShapeList* list) {
-    int nb_points;
+    int input_value;
     float stroke_width;
     char fill_color[16];
     char stroke_color[16];
 
-    if (!read_int(&nb_points, "Entrez le nombre de points (min 3) : ")) return;
-    if (nb_points < 3) {
+    if (!read_int(&input_value, "Entrez le nombre de points (min 3) : ")) return;
+    if (input_value < 3) {
         printf(RED "Il faut au moins 3 points pour un polygone.\n" RESET);
         return;
     }
+
+    const size_t nb_points = (size_t)input_value;
 
     Point* points = malloc(sizeof(Point) * nb_points);
     if (points == NULL) {
@@ -204,7 +207,7 @@ void ask_polygone(ShapeList* list) {
     if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) { free(points); return; }
     if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) { free(points); return; }
 
-    Polygone* pg = polygone_info(points, nb_points);
+    Polygone* pg = polygone_info(points, input_value);
 
     free(points);
 

@@ -3,14 +3,18 @@
 
     #include "shapes.h"
 
-    void ask_circle (ShapeList* list, Point center, const Style* style);
+    void ask_circle (ShapeList* list);
 
-    void ask_ellipse (ShapeList* list, Point center);
+    void ask_ellipse (ShapeList* list);
 
-    void ask_line (ShapeList* list, Point start, Point end);
+    void ask_line (ShapeList* list);
 
-    void ask_rectangle (ShapeList* list, Point origin);
+    void ask_rectangle (ShapeList* list);
 
-    void ask_square (ShapeList* list, Point origin);
+    void ask_square (ShapeList* list);
+
+    void ask_polyline(ShapeList* list);
+
+    void ask_polygone(ShapeList* list);
 
 #endif
