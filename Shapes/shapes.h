@@ -145,7 +145,7 @@
 
 
     Circle* circle_info(Point center, int radius);
-    void free_circle (Circle* sq);
+    void free_circle (Circle* ci);
 
     Ellipse* ellipse_info(Point center, int radius_x, int radius_y);
     void free_ellipse(Ellipse* el);

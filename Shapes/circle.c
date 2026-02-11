@@ -35,12 +35,12 @@ Circle* circle_info(Point center, int radius) {
     return ci;
 }
 
-void free_circle(Circle* ce) {
-    if (ce == NULL) return;
+void free_circle(Circle* ci) {
+    if (ci == NULL) return;
 
-    if (ce->style != NULL) {
-        free_style(ce->style);
+    if (ci->style != NULL) {
+        free_style(ci->style);
     }
 
-    free(ce);
+    free(ci);
 }
