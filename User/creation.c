@@ -12,37 +12,24 @@ void ask_circle(ShapeList* list) {
     int radius;
     float stroke_width;
 
-    char* fill_color = malloc(16 * sizeof(char));
-    char* stroke_color = malloc(16 * sizeof(char));
-
-    if (!fill_color || !stroke_color) {
-        perror("Erreur allocation mémoire couleurs");
-        return;
-    }
+    char fill_color[16];
+    char stroke_color[16];
 
     if (!read_int(&center.x, "Entrez la coordonnée x : ")) return;
     if (!read_int(&center.y, "Entrez la coordonnée y : ")) return;
-
     if (!read_int(&radius, "Entrez le rayon : ")) return;
-
     if (!read_float(&stroke_width, "Entrez l'épaisseur du trait : ")) return;
 
-    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) {
-        free(fill_color); free(stroke_color); return;
-    }
-    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) {
-        free(fill_color); free(stroke_color); return;
-    }
+    if (!seize_color(fill_color, 16, "Entrez la couleur du fond : ")) return;
+    if (!seize_color(stroke_color, 16, "Entrez la couleur du trait : ")) return;
 
     Circle* ci = circle_info(center, radius);
-    if (ci == NULL) {
-        free(fill_color); free(stroke_color);
-        return;
-    }
+    if (ci == NULL) return;
 
     if (ci->style != NULL) {
         free_style(ci->style);
     }
+
     ci->style = style_info(stroke_color, fill_color, stroke_width);
 
     const ShapeData data = {.circle = ci};
