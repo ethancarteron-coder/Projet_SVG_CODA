@@ -1,6 +1,5 @@
 #include "export.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include "shapes.h"
 #include <unistd.h>
 

@@ -129,8 +129,8 @@
     typedef struct ShapeNode {
         ShapeData data;
         ShapeType type;
-        struct Shape_node* next;
-        struct Shape_node* prev;
+        struct ShapeNode* next;
+        struct ShapeNode* prev;
     } ShapeNode;
 
     typedef struct {
