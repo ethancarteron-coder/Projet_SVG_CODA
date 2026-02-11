@@ -114,8 +114,6 @@
         Polyline* polyline;
     } ShapeData;
 
-
-
     typedef enum {
         UNKNOWN = 0,
         CIRCLE,
@@ -128,14 +126,12 @@
         GROUP
     } ShapeType;
 
-
-
-    typedef struct{
+    typedef struct ShapeNode {
         ShapeData data;
         ShapeType type;
         struct Shape_node* next;
         struct Shape_node* prev;
-    }ShapeNode;
+    } ShapeNode;
 
     typedef struct {
         ShapeNode* head;

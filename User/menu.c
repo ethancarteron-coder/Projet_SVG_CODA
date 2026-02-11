@@ -3,20 +3,12 @@
 #include "creation.h"
 #include "list.h"
 #include "modification.h"
-#include "utils.h"
-#include "shapes.h"
-#include "export.h"
+#include "../Utils/utils.h"
+#include "../Shapes/shapes.h"
+#include "../GI/export.h"
 
 int main(void) {
-    ShapeList* list = malloc(sizeof(ShapeList));
-    if (!list) {
-        printf(RED"Erreur allocation liste\n"RESET);
-        return 1;
-    }
-
-    list->head = NULL;
-    list->size = 0;
-    list->tail = NULL;
+    ShapeList* list = create_list();
 
     Style* style = NULL;
     int choice;

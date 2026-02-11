@@ -4,10 +4,23 @@
 #include "shapes.h"
 #include "list.h"
 
+ShapeList* create_list() {
+    ShapeList* list = malloc(sizeof(ShapeList));
+    if (list) {
+        list->head = NULL;
+        list->tail = NULL;
+        list->size = 0;
+    }
+    return list;
+}
+
 void add_shape (ShapeList* list, const ShapeType type, const ShapeData data) {
     if  (list == NULL) return;
     ShapeNode* node = malloc(sizeof(ShapeNode));
-    if (node == NULL) return;
+    if (node == NULL) {
+        perror("Erreur allocation noeud");
+        return;
+    }
 
     node->type = type;
     node->data = data;
@@ -33,7 +46,7 @@ void list_shapes(ShapeList* list) {
 
     printf("Nombre total de formes: %d\n", list->size);
     int i = 1;
-    for (ShapeNode* node = list->head; node != NULL; node = node->next, i++) {
+    for (const ShapeNode* node = list->head; node != NULL; node = node->next, i++) {
         switch (node->type) {
             case CIRCLE:
                 if (node->data.circle) {
