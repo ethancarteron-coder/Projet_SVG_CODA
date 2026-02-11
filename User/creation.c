@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "list.h"
-#include "utils.h"
-#include "shapes.h"
+#include "../Utils/utils.h"
+#include "../Shapes/shapes.h"
 
 void ask_circle(ShapeList* list) {
     Point center;

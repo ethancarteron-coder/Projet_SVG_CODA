@@ -23,8 +23,7 @@ int main(void) {
         printf("3: Lister les formes \n");
         printf("4: Afficher \n");
         printf("0: Quitter\n");
-        printf(BLUE"Votre choix : " RESET);
-        choice = read_int();
+        if (!read_int(&choice, BLUE"Votre choix : " RESET)) return 0;
 
         switch (choice) {
             case 1: creation_menu(list, origin, style); break;

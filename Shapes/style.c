@@ -2,7 +2,7 @@
 #include <string.h>
 #include "shapes.h"
 
-Style* style_info(const char* stroke_color, const char* fill_color, float stroke_width) {
+Style* style_info(const char* stroke_color, const char* fill_color, const float stroke_width) {
     Style* style = malloc(sizeof(Style));
     if (style == NULL) return NULL;
 

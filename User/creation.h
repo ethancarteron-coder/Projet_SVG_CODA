@@ -1,7 +1,7 @@
 #ifndef CREATION_H
     #define CREATION_H
 
-    #include "shapes.h"
+    #include "../Shapes/shapes.h"
 
     void ask_circle (ShapeList* list);
 
