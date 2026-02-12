@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "shapes.h"
-#include "utils.h"
+#include "../Utils/utils.h"
 
 int nb_forme = 0;
 
@@ -13,7 +13,7 @@ Circle* circle_info(const Point center, const int radius) {
     ci->center = center;
     ci->radius = radius;
 
-    ci->style = style_info(ci->style->stroke_color, ci->style->fill_color, ci->style->stroke_width);
+    ci->style = style_info("black", "white", 1.0f);
     if (ci->style == NULL) {
         free(ci);
         return NULL;

@@ -10,8 +10,6 @@
 
 int main(void) {
     ShapeList* list = create_list();
-
-    Style* style = NULL;
     int choice;
 
     do {
@@ -26,10 +24,10 @@ int main(void) {
         if (!read_int(&choice, BLUE"Votre choix : " RESET)) return 0;
 
         switch (choice) {
-            case 1: creation_menu(list, style); break;
+            case 1: creation_menu(list); break;
             //case 2: modification_menu(origin); break;
             case 3: list_shapes(list); break;
-            case 4: export_svg("affichage.svg", list, style); break;
+            case 4: export_svg("affichage.svg", list); break;
             case 0: break;
             default: printf(RED"Choix invalide, veuillez réessayer.\n"RESET); break;
         }
@@ -39,7 +37,7 @@ int main(void) {
 }
 
 
-void creation_menu(ShapeList* list, Style *style) {
+void creation_menu(ShapeList* list) {
     int choice;
     do {
         system("clear");
@@ -56,14 +54,14 @@ void creation_menu(ShapeList* list, Style *style) {
         if (!read_int(&choice, BLUE"Votre choix : " RESET)) return;
 
         switch (choice) {
-            case 1: export_svg("affichage.svg", list, style); break;
+            case 1: export_svg("affichage.svg", list); break;
             case 2: ask_circle(list); break;
-            case 3: ask_ellipse(list); break;
-            case 4: ask_line(list); break;
-            case 5: ask_rectangle(list); break;
-            case 6: ask_square(list); break;
-            case 7: ask_polygone(list); break;
-            case 8: ask_polyline(list); break;
+            // case 3: ask_ellipse(list); break;
+            // case 4: ask_line(list); break;
+            // case 5: ask_rectangle(list); break;
+            // case 6: ask_square(list); break;
+            // case 7: ask_polygone(list); break;
+            // case 8: ask_polyline(list); break;
             case 0:
                 printf(BLUE "Retour au menu principal \n" RESET);
                 return;

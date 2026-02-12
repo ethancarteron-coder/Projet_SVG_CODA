@@ -22,7 +22,7 @@ Style* style_info(const char* stroke_color, const char* fill_color, const float 
 
     style->stroke_width = stroke_width;
     style->id = NULL;
-    
+
     return style;
 }
 
