@@ -19,7 +19,6 @@ Circle* circle_info(const Point center, const int radius) {
         return NULL;
     }
 
-
     ci->modif.angle = 0.0;
     ci->modif.dx = 0;
     ci->modif.dy = 0;

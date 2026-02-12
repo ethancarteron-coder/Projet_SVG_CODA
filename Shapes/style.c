@@ -28,8 +28,5 @@ Style* style_info(const char* stroke_color, const char* fill_color, const float 
 
 void free_style(Style* style) {
     if (style == NULL) return;
-    free(style->stroke_color);
-    free(style->fill_color);
-    free(style->id);
     free(style);
 }
